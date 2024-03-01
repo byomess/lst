@@ -123,6 +123,16 @@ The `lst` command enhances your file and directory listing with a rich set of fe
 
 By mastering these options, you can tailor the `lst` output to precisely fit your needs, making file and directory management a visually enjoyable and efficient process.
 
+### Useful Alias
+
+```bash
+# List files in table format with headers, file size, permissions and creation date
+alias lstt='lst -tHpbc'
+```
+
+Put this on your `.bashrc` (or any other shell config file) and use `lstt` to have a very handy alias.
+You can still run it with additional flags like `lstt -x` to include directory sizes in the listing.
+
 ## Contributing
 
 Contributions are welcome! If you have suggestions for improvements, feel free to fork the repository and submit a pull request.
