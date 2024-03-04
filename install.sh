@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-# Default installation path
-default_install_path="$HOME/.local/bin/lst"
+# Package name
+package_name="lst"
 
-# Parse command-line arguments for custom install path or silent mode
+# Default installation path changed to ~/.local/share/$package_name
+default_install_path="$HOME/.local/share/$package_name"
+
+# Parse command-line arguments for custom install path, silent mode, or clone option
 for arg in "$@"
 do
     case $arg in
@@ -18,6 +21,10 @@ do
         --backup)
         backup="true"
         shift # Remove --backup from processing
+        ;;
+        --clone)
+        clone_repo="true"
+        shift # Remove --clone from processing
         ;;
     esac
 done
@@ -34,10 +41,19 @@ echo_if_not_silent() {
 # Check for dependencies (example)
 check_dependencies() {
     missing_deps=0
-    command -v curl >/dev/null 2>&1 || { echo_if_not_silent "curl is not installed. Please install it and try again."; let missing_deps++; }
     command -v python3 >/dev/null 2>&1 || { echo_if_not_silent "python3 is not installed. Please install it and try again."; let missing_deps++; }
     if [ $missing_deps -ne 0 ]; then
         exit 1
+    fi
+}
+
+# Clone the repository if needed
+clone_repository() {
+    if [ "$clone_repo" == "true" ]; then
+        echo_if_not_silent "Cloning the repository..."
+        git clone https://github.com/felipechierice/$package_name "$install_path"
+        cd "$install_path" || exit
+        echo_if_not_silent "Repository cloned to $install_path."
     fi
 }
 
@@ -77,14 +93,16 @@ backup_if_needed() {
     fi
 }
 
-# Installation steps
+# Modified installation steps
 perform_installation() {
-    echo_if_not_silent "Attempting to install lst at '$install_path'."
-    mkdir -p "$install_path"
-    # Assuming the script's path is here
-    cp  "$(dirname "$0")/main.py" "$install_path/main.py"
-    cp  "$(dirname "$0")/lst" "$install_path/lst"
-    chmod +x "$install_path/lst"
+    if [ "$clone_repo" != "true" ]; then
+        echo_if_not_silent "Attempting to install $package_name at '$install_path'."
+        mkdir -p "$install_path"
+        # Copy the current directory content to the new installation path
+        cp -r "$(dirname "$0")/"* "$install_path"
+    fi
+    # Create a symbolic link to ~/.local/bin/$package_name
+    ln -s "$install_path/$package_name" "$HOME/.local/bin/$package_name"
     echo_if_not_silent "Installation completed."
 }
 
@@ -117,9 +135,9 @@ update_path_in_shell() {
 
 # Check if already installed and prompt for reinstallation
 check_existing_installation() {
-    if [ -d "$install_path" ]; then
+    if [ -d "$install_path" ] && [ "$clone_repo" != "true" ]; then
         if [ -z "$silent" ]; then
-            read -p "lst is already installed. Do you want to proceed with reinstallation? (y/n) " -n 1 -r
+            read -p "$package_name is already installed. Do you want to proceed with reinstallation? (y/n) " -n 1 -r
             echo
             if [[ ! $REPLY =~ ^[Yy]$ ]]; then
                 echo "Installation cancelled."
@@ -132,6 +150,7 @@ check_existing_installation() {
 
 main() {
     check_dependencies
+    clone_repository
     check_existing_installation
     create_virtualenv_and_install_requirements
     perform_installation
@@ -145,7 +164,7 @@ main() {
         echo "Please add $HOME/.local/bin to your PATH manually."
     fi
     echo_if_not_silent "Installation completed successfully."
-    echo_if_not_silent "Please restart your shell to start using lst."
+    echo_if_not_silent "Please restart your shell to start using $package_name."
 }
 
 main "$@"

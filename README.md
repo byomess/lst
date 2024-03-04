@@ -23,11 +23,43 @@ While the traditional `ls` command is powerful, `lst` takes file listing to the 
 
 ## Installation
 
+You can install `lst` using curl, wget, or by manually cloning the repository and installing dependencies. 
+
+### Using Curl
+
+```bash
+curl -sSL "https://raw.githubusercontent.com/felipechierice/lst/main/install.sh" | sh -s -- --clone
+```
+
+### Using Wget
+
+```bash
+wget -qO- "https://raw.githubusercontent.com/felipechierice/lst/main/install.sh" | sh -s -- --clone
+```
+
+### Manual Installation
+
+If you prefer to install `lst` manually, follow these steps:
+
+1. Clone the repository:
+
 ```bash
 git clone https://github.com/felipechierice/lst
+```
+
+2. Navigate to the `lst` directory:
+
+```bash
 cd lst
+```
+
+3. Execute the installation script
+
+```bash
 ./install.sh
 ```
+
+Ensure you have Python 3.6 or later installed on your system to use `lst`.
 
 ## Usage
 
@@ -132,6 +164,16 @@ alias lstt='lst -tHpbc'
 
 Put this on your `.bashrc` (or any other shell config file) and use `lstt` to have a very handy alias.
 You can still run it with additional flags like `lstt -x` to include directory sizes in the listing.
+
+## Uninstalling
+
+It is as simple as executing the following script:
+
+```bash
+~/.local/share/lst/uninstall.sh
+```
+
+If you have installed `lst` in a different directory, just make sure you change it in the command.
 
 ## Contributing
 
