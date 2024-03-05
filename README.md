@@ -1,4 +1,29 @@
-# lst - ls Turbo
+<p align="center">
+    <img width="200px" src="https://github.com/felipechierice/lst/blob/main/images/logo.png?raw=true" align="center" alt="LS Turbo Logo" />
+    <h2 align="center">lst - ls turbo</h2>
+    <p align="center">Your <code>ls</code> command on <strong>turbo</strong></p>
+</p>
+
+<p align="center">
+    <a href="https://github.com/felipechierice/lst/stargazers">
+        <img src="https://img.shields.io/github/stars/felipechierice/lst?style=social" alt="GitHub stars">
+    </a>
+    <a href="https://github.com/felipechierice/lst/network/members">
+        <img src="https://img.shields.io/github/forks/felipechierice/lst?style=social" alt="GitHub forks">
+    </a>
+    <a href="https://github.com/felipechierice/lst/issues">
+        <img src="https://img.shields.io/github/issues/felipechierice/lst" alt="GitHub issues">
+    </a>
+    <a href="https://github.com/felipechierice/lst/blob/main/LICENSE">
+        <img src="https://img.shields.io/github/license/felipechierice/lst" alt="GitHub license">
+    </a>
+    <a href="https://github.com/felipechierice/lst/graphs/contributors">
+        <img src="https://img.shields.io/github/contributors/felipechierice/lst" alt="GitHub contributors">
+    </a>
+    <a href="https://github.com/felipechierice/lst/commits/main">
+        <img src="https://img.shields.io/github/last-commit/felipechierice/lst" alt="GitHub last commit">
+    </a>
+</p>
 
 `lst` is an enhanced version of the traditional `ls` command found in Linux systems, designed to provide a more informative and visually appealing way to list files and directories. It leverages the power of the [Rich library](https://github.com/willmcgugan/rich) to display outputs in a colorful, structured, and easy-to-read format. Whether you're navigating through cluttered directories or you need detailed file information at a glance, `lst` offers a plethora of features to make directory listing more insightful and productive.
 
