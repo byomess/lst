@@ -349,7 +349,7 @@ def get_row_data(entry, path, options, directory_sizes=None):
         
         # Check if the file is executable, not a directory, and set color accordingly
         is_executable = os.access(entry_path, os.X_OK) and not is_dir
-        entry_color = 'bold green' if is_executable else ('sky_blue3' if is_dir else 'default')
+        entry_color = 'bold green' if is_executable else ('bold sky_blue3' if is_dir else 'default')
         entry_display = f"'{entry}'" if ' ' in entry else entry
         entry_display = f"[{entry_color}]{get_entry_icon(entry, is_dir)}{entry_display}"
 
@@ -475,7 +475,7 @@ def list_directory(
             entry_path = os.path.join(path, entry)
             is_dir = os.path.isdir(entry_path)
             is_executable = os.access(entry_path, os.X_OK) and not is_dir
-            entry_color = 'bold green' if is_executable else ('sky_blue3' if is_dir else 'default')
+            entry_color = 'bold green' if is_executable else ('bold sky_blue3' if is_dir else 'default')
             entry_display = f"'{entry}'" if ' ' in entry else entry
             entry_display = f"[{entry_color}]{get_entry_icon(entry, is_dir)}{entry_display}"
             console.print(f"[{entry_color}]{entry_display}", end='  ')
