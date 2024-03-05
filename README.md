@@ -28,13 +28,13 @@ You can install `lst` using curl, wget, or by manually cloning the repository an
 ### Using Curl
 
 ```bash
-curl -sSL "https://raw.githubusercontent.com/felipechierice/lst/main/install.sh" | sh -s -- --clone
+curl -sSL "https://raw.githubusercontent.com/felipechierice/lst/main/install.sh" | bash -s -- --clone
 ```
 
 ### Using Wget
 
 ```bash
-wget -qO- "https://raw.githubusercontent.com/felipechierice/lst/main/install.sh" | sh -s -- --clone
+wget -qO- "https://raw.githubusercontent.com/felipechierice/lst/main/install.sh" | bash -s -- --clone
 ```
 
 ### Manual Installation

@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 package_name="lst"
-here=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-$here/../share/$package_name/venv/bin/python $here/../share/$package_name/main.py $@
+$HOME/.local/share/$package_name/venv/bin/python $HOME/.local/share/$package_name/main.py $@
