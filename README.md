@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="200px" src="https://github.com/felipechierice/lst/blob/main/images/logo.png?raw=true" align="center" alt="LS Turbo Logo" />
+    <img width="200px" src="https://github.com/byomess/lst/blob/main/images/logo.png?raw=true" align="center" alt="LS Turbo Logo" />
     <h2 align="center">lst - ls turbo</h2>
     <p align="center">Your <code>ls</code> command on <strong>turbo</strong></p>
 </p>
@@ -23,6 +23,10 @@
     <a href="https://github.com/felipechierice/lst/commits/main">
         <img src="https://img.shields.io/github/last-commit/felipechierice/lst" alt="GitHub last commit">
     </a>
+</p>
+
+<p align="center">
+    <img src="https://github.com/byomess/lst/blob/main/images/ss-1.png?raw=true" align="center" alt="LS Turbo Screenshot" />
 </p>
 
 `lst` is an enhanced version of the traditional `ls` command found in Linux systems, designed to provide a more informative and visually appealing way to list files and directories. It leverages the power of the [Rich library](https://github.com/willmcgugan/rich) to display outputs in a colorful, structured, and easy-to-read format. Whether you're navigating through cluttered directories or you need detailed file information at a glance, `lst` offers a plethora of features to make directory listing more insightful and productive.
@@ -184,11 +188,11 @@ By mastering these options, you can tailor the `lst` output to precisely fit you
 
 ```bash
 # List files in table format with headers, file size, permissions and creation date
-alias lstt='lst -tHpbc'
+alias ll='lst -Hpbc'
 ```
 
-Put this on your `.bashrc` (or any other shell config file) and use `lstt` to have a very handy alias.
-You can still run it with additional flags like `lstt -x` to include directory sizes in the listing.
+Put this on your `.bashrc` (or any other shell config file) and use `ll` to have a very handy alias.
+You can still run it with additional flags like `ll -x` to include directory sizes in the listing.
 
 ## Uninstalling
 
