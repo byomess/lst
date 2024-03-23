@@ -1,7 +1,7 @@
 <p align="center">
     <img width="200px" src="https://github.com/byomess/lst/blob/main/images/logo.png?raw=true" align="center" alt="LS Turbo Logo" />
     <h2 align="center">lst - ls turbo</h2>
-    <p align="center">Your <code>ls</code> command on <strong>turbo</strong></p>
+    <p align="center">🔥 Your <code>ls</code> command on <strong>turbo</strong> 🚀</p>
 </p>
 
 <p align="center">
@@ -184,7 +184,7 @@ The `lst` command enhances your file and directory listing with a rich set of fe
 
 By mastering these options, you can tailor the `lst` output to precisely fit your needs, making file and directory management a visually enjoyable and efficient process.
 
-### Useful Alias
+### Useful Aliases
 
 ```bash
 # List files in table format with headers, file size, permissions and creation date
@@ -193,6 +193,16 @@ alias ll='lst -Hpbc'
 
 Put this on your `.bashrc` (or any other shell config file) and use `ll` to have a very handy alias.
 You can still run it with additional flags like `ll -x` to include directory sizes in the listing.
+
+Here are some more handy `lst` aliases you might want to use:
+```bash
+alias l='lst $@' # List directory entries in short format
+alias ll='lst -Hpbc $@' # List directory entries in table format
+alias lll='lst -Hpbcmug $@' # List directory entries in table format with more info
+alias la='lst -a $@' # List directory entries (including hidden) in short format
+alias lla='lst -Hpbac $@'  # List directory entries (including hidden) in table format
+alias llla='lst -Hpbacmug $@'  # List directory entries (including hidden) in table forma with more infot
+```
 
 ## Uninstalling
 
