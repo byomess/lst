@@ -3,23 +3,20 @@
 # Package name
 package_name="lst"
 
-# Parse command-line arguments for silent mode or clone option
+silent=false
+
 for arg in "$@"; do
 	case $arg in
 	--silent)
-		silent="true"
-		shift # Remove --silent from processing
-		;;
-	--clone)
-		clone_repo="true"
-		shift # Remove --clone from processing
+		silent=true
+		shift
 		;;
 	esac
 done
 
 # Function to echo only if not in silent mode
 echo_if_not_silent() {
-	if [ -z "$silent" ]; then
+	if [[ "$silent" == true ]]; then
 		echo "$@"
 	fi
 }
@@ -33,15 +30,6 @@ check_dependencies() {
 	}
 	if [ $missing_deps -ne 0 ]; then
 		exit 1
-	fi
-}
-
-# Clone the repository if needed
-clone_repository() {
-	if [ "$clone_repo" == "true" ]; then
-		echo_if_not_silent "Cloning the repository..."
-		git clone https://github.com/felipechierice/$package_name .
-		echo_if_not_silent "Repository cloned to the current directory."
 	fi
 }
 
@@ -74,7 +62,6 @@ create_virtualenv_and_install_requirements() {
 
 main() {
 	check_dependencies
-	clone_repository
 	create_virtualenv_and_install_requirements
 	echo_if_not_silent "Package setup completed successfully."
 }

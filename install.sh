@@ -12,31 +12,38 @@ default_bin_dir_path="$HOME/.local/bin"
 # Entry point for the script
 entry_point="lst.py"
 
+# GitHub repository URL for cloning
+github_repo="https://github.com/byomess/lst.git"
+
 # Default Python version for running the package
 TARGET_PYENV_PYTHON_VERSION="3.11"
 
-# Parse command-line arguments for custom install path, silent mode, or clone option
+silent=false
+no_confirmation=false
+clone_repo=false
+
 for arg in "$@"; do
 	case $arg in
 	--silent)
-		silent="true"
-		shift # Remove --silent from processing
+		silent=true
+		shift
+		;;
+	--no-confirmation)
+		no_confirmation=true
+		shift
+		;;
+	--clone)
+		clone_repo=true
+		no_confirmation=true
+		shift
 		;;
 	--path=*)
 		custom_install_dir_path="${arg#*=}"
-		shift # Remove --path=value from processing
+		shift
 		;;
 	--bin-path=*)
 		custom_bin_dir_path="${arg#*=}"
-		shift # Remove --bin-path=value from processing
-		;;
-	--backup)
-		backup="true"
-		shift # Remove --backup from processing
-		;;
-	--clone)
-		clone_repo="true"
-		shift # Remove --clone from processing
+		shift
 		;;
 	esac
 done
@@ -52,7 +59,7 @@ package_python_bin_path="$package_install_dir_path/venv/bin/python"
 
 # Function to echo only if not in silent mode
 echo_if_not_silent() {
-	if [ -z "$silent" ]; then
+	if [[ "$silent" == false ]]; then
 		echo "$@"
 	fi
 }
@@ -68,11 +75,9 @@ EOF
 
 # Modified installation steps
 perform_installation() {
-	if [ "$clone_repo" != "true" ]; then
-		echo_if_not_silent "Installing $package_name at '$package_install_dir_path'."
-		mkdir -p "$install_dir_path"
-		cp -r . "$package_install_dir_path"
-	fi
+	echo_if_not_silent "Installing $package_name at '$package_install_dir_path'."
+	mkdir -p "$install_dir_path"
+	cp -r . "$package_install_dir_path"
 	generate_entry_point_script
 	ln -s "$package_bin_path" "$bin_link_path"
 }
@@ -91,13 +96,15 @@ update_path_in_shell() {
 		return
 	fi
 
-	echo_if_not_silent "$bin_dir_path is not in your PATH."
-	echo_if_not_silent "You are using the $SHELL shell."
-	read -p "Do you want to automatically add $HOME/.local/bin to your PATH? (y/N) " -n 1 -r
-	echo_if_not_silent
+	if [[ $no_confirmation == false ]]; then
+		echo "$bin_dir_path is not in your PATH."
+		echo "You are using the $SHELL shell."
+		read -p "Do you want to automatically add $HOME/.local/bin to your PATH? (y/N) " -n 1 -r
 
-	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-		echo_if_not_silent "Please add $HOME/.local/bin to your PATH manually."
+		if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+			echo_if_not_silent "Please add $HOME/.local/bin to your PATH manually."
+			return
+		fi
 	fi
 
 	local shell_config_file
@@ -112,7 +119,7 @@ update_path_in_shell() {
 		shell_config_file="$HOME/.config/fish/config.fish"
 		;;
 	*)
-		echo_if_not_silent "Unsupported shell for automatic PATH update. Please manually add $bin_dir_path to your PATH."
+		echo "Unsupported shell for automatic PATH update. Please manually add $bin_dir_path to your PATH."
 		return
 		;;
 	esac
@@ -124,24 +131,42 @@ update_path_in_shell() {
 
 # Check if already installed and prompt for reinstallation
 check_existing_installation() {
-	if [ -d "$package_install_dir_path" ] && [ "$clone_repo" != "true" ]; then
-		if [ -z "$silent" ]; then
+	if [ -d "$package_install_dir_path" ]; then
+		if [[ "$no_confirmation" == false ]]; then
 			read -p "$package_name is already installed. Do you want to proceed with reinstallation? (y/n) " -n 1 -r
-			echo
 			if [[ ! $REPLY =~ ^[Yy]$ ]]; then
 				echo_if_not_silent "Installation cancelled."
 				exit 0
 			fi
 		fi
-		backup_if_needed
+		rm -rf "$package_install_dir_path"
+		rm -f "$bin_link_path"
+	fi
+}
+
+clone_repo_and_setup() {
+	if [[ "$clone_repo" == true ]]; then
+		git clone "$github_repo"
+		cd "$package_name" || exit
+		./setup.sh
+	fi
+}
+
+remove_repository() {
+	if [[ "$clone_repo" == true ]]; then
+		cd ..
+		rm -rf "$package_name"
+		echo_if_not_silent "Removed the cloned repository."
 	fi
 }
 
 main() {
 	check_existing_installation
+	clone_repo_and_setup
 	perform_installation
 	generate_entry_point_script
 	update_path_in_shell
+	remove_repository
 	echo_if_not_silent "Installation completed."
 }
 

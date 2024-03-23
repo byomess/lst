@@ -52,14 +52,14 @@ While the traditional `ls` command is powerful, `lst` takes file listing to the 
 
 ## Installation
 
-You can install `lst` by executing the [installation script](#installation-script), through some of the supported [Linux package managers](#linux-package-managers), or [manually installing](#manual-installation) by cloning the repository and installing dependencies. 
+You can install `lst` by executing the [installation script](#installation-script), through some of the supported [Linux package managers](#linux-package-managers), or [manually installing](#manual-installation) by cloning the repository and installing dependencies.
 
 ### Installation Script
 
 **Using `curl`:**
 
 ```bash
-curl -sSL "https://raw.githubusercontent.com/byomess/lst/main/install.sh" | bash -s -- --clone
+curl -s "https://raw.githubusercontent.com/byomess/lst/main/install.sh" | bash -s -- --clone
 ```
 
 **Using `wget`:**
@@ -72,6 +72,7 @@ wget -qO- "https://raw.githubusercontent.com/byomess/lst/main/install.sh" | bash
 
 Currently, `lst` is only available on `AUR` repository for Arch Linux.
 If you have `yay` set up, you can easily install `lst` by running:
+
 ```bash
 yay -Syy lst-git
 ```
@@ -92,7 +93,13 @@ git clone https://github.com/byomess/lst
 cd lst
 ```
 
-3. Execute the installation script
+3. Execute the setup script:
+
+```bash
+./setup.sh
+```
+
+4. Execute the installation script:
 
 ```bash
 ./install.sh
@@ -107,13 +114,13 @@ The `lst` command enhances your file and directory listing with a rich set of fe
 ### Basic Usage
 
 - **List current directory contents**: Simply type `lst` to list the files and directories in your current working directory.
-  
+
   ```bash
   lst
   ```
 
 - **List contents of a specific directory**: To list items in a specific directory, provide the path as an argument.
-  
+
   ```bash
   lst /path/to/directory
   ```
@@ -121,19 +128,19 @@ The `lst` command enhances your file and directory listing with a rich set of fe
 ### Display Options
 
 - **Table format**: Use the `-t` or `--table` option to display the contents in a table format, making it easier to read.
-  
+
   ```bash
   lst -t
   ```
 
 - **Show table header**: To add a header to the table format, include the `-H` or `--show-header` option.
-  
+
   ```bash
   lst -tH # Same as: ls -t -H
   ```
 
 - **Include hidden files**: The `-a` or `--all` flag will include hidden files (those starting with a dot) in the listing.
-  
+
   ```bash
   lst -ta
   ```
@@ -141,13 +148,13 @@ The `lst` command enhances your file and directory listing with a rich set of fe
 ### Sorting and Filtering
 
 - **Sort by attribute**: Use the `-s` or `--sort-by` option followed by your choice of `name`, `size`, `created`, or `modified` to sort the listing accordingly.
-  
+
   ```bash
   lst -ts size
   ```
 
 - **Reverse sorting**: The `-r` or `--reverse-sorting` flag reverses the sorting order of the listing.
-  
+
   ```bash
   lst -trs size # Same as: lst -t -r -s size
   ```
@@ -155,25 +162,25 @@ The `lst` command enhances your file and directory listing with a rich set of fe
 ### Detailed Information
 
 - **Show creation and modification dates**: Display the creation date with `-c` or `--show-created` and the modification date with `-m` or `--show-modified`.
-  
+
   ```bash
   lst -tcm
   ```
 
 - **Show file sizes**: The `-b` or `--show-size` option shows the size of files and directories.
-  
+
   ```bash
   lst -tb
   ```
 
 - **Show total size of directories**: To see the total size of each directory listed, use `-x` or `--show-folder-size`.
-  
+
   ```bash
   lst -tx
   ```
 
 - **Show permissions, owner, and group**: Display permissions with `-p` or `--show-permissions`, owner with `-u` or `--show-owner`, and group with `-g` or `--show-group`.
-  
+
   ```bash
   lst -tpug
   ```
@@ -181,13 +188,13 @@ The `lst` command enhances your file and directory listing with a rich set of fe
 ### Advanced Usage
 
 - **Comprehensive listing**: Combine multiple options to get a detailed overview, for example, a table with sizes, permissions, owner, group, and modification dates of all files, including hidden ones.
-  
+
   ```bash
   lst -tHabpuagms size
   ```
 
 - **Quiet mode**: The `-q` or `--quiet` option suppresses progress bars and other non-essential output, useful for scripting or when you need a clean output.
-  
+
   ```bash
   lst -txbq
   ```
@@ -205,6 +212,7 @@ Put this on your `.bashrc` (or any other shell config file) and use `ll` to have
 You can still run it with additional flags like `ll -x` to include directory sizes in the listing.
 
 Here are some more handy `lst` aliases you might want to use:
+
 ```bash
 alias l='lst $@' # List directory entries in short format
 alias ll='lst -Hpbc $@' # List directory entries in table format
