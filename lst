@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-package_name="lst"
-$HOME/.local/share/$package_name/venv/bin/python $HOME/.local/share/$package_name/main.py $@

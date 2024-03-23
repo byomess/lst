@@ -3,88 +3,65 @@
 # Package name
 package_name="lst"
 
-# Default installation path. Ensure this matches the installation script
-default_install_path="$HOME/.local/share/$package_name"
+# Default installation path
+default_install_path="$HOME/.local/share"
 
-# Parse command-line arguments for custom install path
+# Default binary path
+default_bin_path="$HOME/.local/bin"
+
+# Entry point for the script
+entry_point="lst.py"
+
+# Parse command-line arguments for custom install path or binary path
 for arg in "$@"; do
-    case $arg in
-        --path=*)
-        custom_install_path="${arg#*=}"
-        shift # Remove --path=value from processing
-        ;;
-    esac
+	case $arg in
+	--silent)
+		silent="true"
+		shift # Remove --silent from processing
+		;;
+	--path=*)
+		custom_install_path="${arg#*=}"
+		shift # Remove --path=value from processing
+		;;
+	--bin-path=*)
+		custom_bin_path="${arg#*=}"
+		shift # Remove --bin-path=value from processing
+		;;
+	esac
 done
 
 install_path="${custom_install_path:-$default_install_path}"
+bin_path="${custom_bin_path:-$default_bin_path}"
+package_install_dir_path="$install_path/$package_name"
+entry_point_path="$package_install_dir_path/$entry_point"
 
-# Function to echo messages
-echo_message() {
-    echo "$@"
+# Function to echo only if not in silent mode
+echo_if_not_silent() {
+	if [ -z "$silent" ]; then
+		echo "$@"
+	fi
 }
 
-# Remove the installed package directory
-remove_package() {
-    if [ -d "$install_path" ]; then
-        rm -rf "$install_path"
-        echo_message "Removed installed package at $install_path."
-    else
-        echo_message "Package directory $install_path does not exist."
-    fi
-}
+# Uninstall the package
+perform_uninstallation() {
+	if [ -L "$bin_path/$package_name" ]; then
+		rm "$bin_path/$package_name"
+		echo_if_not_silent "Removed symbolic link from $bin_path/$package_name"
+	else
+		echo_if_not_silent "No symbolic link found at $bin_path/$package_name"
+	fi
 
-# Remove the symbolic link from ~/.local/bin
-remove_symlink() {
-    local symlink_path="$HOME/.local/bin/$package_name"
-    if [ -L "$symlink_path" ]; then
-        rm "$symlink_path"
-        echo_message "Removed symbolic link from $symlink_path."
-    else
-        echo_message "Symbolic link $symlink_path does not exist."
-    fi
-}
-
-# Optionally remove the added path from the user's shell configuration file
-remove_path_from_shell() {
-    local shell_config_file
-    case "$SHELL" in
-    */bash)
-        shell_config_file="$HOME/.bashrc"
-        ;;
-    */zsh)
-        shell_config_file="$HOME/.zshrc"
-        ;;
-    */fish)
-        shell_config_file="$HOME/.config/fish/config.fish"
-        ;;
-    *)
-        echo_message "Automatic PATH removal is not supported for your shell. If you manually added $install_path to your PATH, please remove it."
-        return
-        ;;
-    esac
-
-    # Check and remove the path only if it was added
-    if grep -q "$install_path" "$shell_config_file" ; then
-        # Use sed to remove the line containing the path
-        sed -i "/$install_path/d" "$shell_config_file"
-        echo_message "Removed $install_path from PATH in $shell_config_file."
-    else
-        echo_message "$install_path was not found in your PATH in $shell_config_file."
-    fi
+	if [ -d "$package_install_dir_path" ]; then
+		rm -rf "$package_install_dir_path"
+		echo_if_not_silent "Removed package directory $package_install_dir_path"
+	else
+		echo_if_not_silent "Package directory not found at $package_install_dir_path"
+	fi
 }
 
 main() {
-    echo_message "Starting uninstallation of $package_name."
-    remove_package
-    remove_symlink
-    read -p "Do you want to remove $install_path from your PATH in your shell configuration file? (y/n) " -n 1 -r
-    echo # move to a new line
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        remove_path_from_shell
-    else
-        echo_message "Skipping PATH removal. If you added $install_path to your PATH manually, please remove it."
-    fi
-    echo_message "Uninstallation completed. Please restart your shell."
+	perform_uninstallation
+	echo_if_not_silent "Uninstallation completed successfully."
 }
 
 main "$@"
