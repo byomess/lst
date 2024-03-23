@@ -5,23 +5,23 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/felipechierice/lst/stargazers">
-        <img src="https://img.shields.io/github/stars/felipechierice/lst?style=social" alt="GitHub stars">
+    <a href="https://github.com/byomess/lst/stargazers">
+        <img src="https://img.shields.io/github/stars/byomess/lst?style=social" alt="GitHub stars">
     </a>
-    <a href="https://github.com/felipechierice/lst/network/members">
-        <img src="https://img.shields.io/github/forks/felipechierice/lst?style=social" alt="GitHub forks">
+    <a href="https://github.com/byomess/lst/network/members">
+        <img src="https://img.shields.io/github/forks/byomess/lst?style=social" alt="GitHub forks">
     </a>
-    <a href="https://github.com/felipechierice/lst/issues">
-        <img src="https://img.shields.io/github/issues/felipechierice/lst" alt="GitHub issues">
+    <a href="https://github.com/byomess/lst/issues">
+        <img src="https://img.shields.io/github/issues/byomess/lst" alt="GitHub issues">
     </a>
-    <a href="https://github.com/felipechierice/lst/blob/main/LICENSE">
-        <img src="https://img.shields.io/github/license/felipechierice/lst" alt="GitHub license">
+    <a href="https://github.com/byomess/lst/blob/main/LICENSE">
+        <img src="https://img.shields.io/github/license/byomess/lst" alt="GitHub license">
     </a>
-    <a href="https://github.com/felipechierice/lst/graphs/contributors">
-        <img src="https://img.shields.io/github/contributors/felipechierice/lst" alt="GitHub contributors">
+    <a href="https://github.com/byomess/lst/graphs/contributors">
+        <img src="https://img.shields.io/github/contributors/byomess/lst" alt="GitHub contributors">
     </a>
-    <a href="https://github.com/felipechierice/lst/commits/main">
-        <img src="https://img.shields.io/github/last-commit/felipechierice/lst" alt="GitHub last commit">
+    <a href="https://github.com/byomess/lst/commits/main">
+        <img src="https://img.shields.io/github/last-commit/byomess/lst" alt="GitHub last commit">
     </a>
 </p>
 
@@ -52,18 +52,28 @@ While the traditional `ls` command is powerful, `lst` takes file listing to the 
 
 ## Installation
 
-You can install `lst` using curl, wget, or by manually cloning the repository and installing dependencies. 
+You can install `lst` by executing the [installation script](#installation-script), through some of the supported [Linux package managers](#linux-package-managers), or [manually installing](#manual-installation) by cloning the repository and installing dependencies. 
 
-### Using Curl
+### Installation Script
+
+**Using `curl`:**
 
 ```bash
-curl -sSL "https://raw.githubusercontent.com/felipechierice/lst/main/install.sh" | bash -s -- --clone
+curl -sSL "https://raw.githubusercontent.com/byomess/lst/main/install.sh" | bash -s -- --clone
 ```
 
-### Using Wget
+**Using `wget`:**
 
 ```bash
-wget -qO- "https://raw.githubusercontent.com/felipechierice/lst/main/install.sh" | bash -s -- --clone
+wget -qO- "https://raw.githubusercontent.com/byomess/lst/main/install.sh" | bash -s -- --clone
+```
+
+### Linux Package Managers
+
+Currently, `lst` is only available on `AUR` repository for Arch Linux.
+If you have `yay` set up, you can easily install `lst` by running:
+```bash
+yay -Syy lst-git
 ```
 
 ### Manual Installation
@@ -73,7 +83,7 @@ If you prefer to install `lst` manually, follow these steps:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/felipechierice/lst
+git clone https://github.com/byomess/lst
 ```
 
 2. Navigate to the `lst` directory:
